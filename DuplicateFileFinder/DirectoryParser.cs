@@ -2,6 +2,6 @@
 {
     public interface IDirectoryParser
     {
-        void FindAllFiles(string rootDirectory);
+        object FindAllFiles(string rootDirectory);
     }
 }

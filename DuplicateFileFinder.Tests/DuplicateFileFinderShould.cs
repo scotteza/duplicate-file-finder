@@ -9,11 +9,11 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Read_Files_From_Directory_Parser()
         {
-            var directoryParser = new Mock<IDirectoryParser>();
             var rootDirectory = "root";
+            var directoryParser = new Mock<IDirectoryParser>();
 
             var duplicateFinder = new DuplicateFinder(directoryParser.Object);
-            var result = duplicateFinder.FindAllFiles();
+            duplicateFinder.FindAllFiles(rootDirectory);
 
             directoryParser.Verify(dp => dp.FindAllFiles(rootDirectory));
         }

@@ -9,9 +9,9 @@
             _directoryParserObject = directoryParserObject;
         }
 
-        public object FindAllFiles()
+        public object FindAllFiles(string rootDirectory)
         {
-            throw new System.NotImplementedException();
+            return _directoryParserObject.FindAllFiles(rootDirectory);
         }
     }
 }
