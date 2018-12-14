@@ -1,10 +1,10 @@
 ﻿namespace DuplicateFileFinder
 {
-    public class DuplicateFinder
+    public class FileFinder
     {
         private readonly IDirectoryParser _directoryParserObject;
 
-        public DuplicateFinder(IDirectoryParser directoryParserObject)
+        public FileFinder(IDirectoryParser directoryParserObject)
         {
             _directoryParserObject = directoryParserObject;
         }

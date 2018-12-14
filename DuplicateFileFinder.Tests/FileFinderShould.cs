@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace DuplicateFileFinder.Tests
 {
     [TestFixture]
-    class DuplicateFileFinderShould
+    internal class FileFinderShould
     {
         [Test]
         public void Read_Files_From_Directory_Parser()
@@ -12,8 +12,8 @@ namespace DuplicateFileFinder.Tests
             var rootDirectory = "root";
             var directoryParser = new Mock<IDirectoryParser>();
 
-            var duplicateFinder = new DuplicateFinder(directoryParser.Object);
-            duplicateFinder.FindAllFiles(rootDirectory);
+            var fileFinder = new FileFinder(directoryParser.Object);
+            fileFinder.FindAllFiles(rootDirectory);
 
             directoryParser.Verify(dp => dp.FindAllFiles(rootDirectory));
         }
