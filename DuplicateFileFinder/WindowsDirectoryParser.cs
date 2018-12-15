@@ -12,5 +12,12 @@ namespace DuplicateFileFinder
             var directoryInfos = directoryInfo.GetDirectories();
             return directoryInfos.Select(di => new DirectoryData(di)).ToList();
         }
+
+        public List<FileData> FindAllFiles(DirectoryData directoryData)
+        {
+            var directoryInfo = new DirectoryInfo(directoryData.FullPath);
+            var fileInfos = directoryInfo.GetFiles();
+            return fileInfos.Select(fi => new FileData(fi)).ToList();
+        }
     }
 }
