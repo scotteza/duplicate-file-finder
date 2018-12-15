@@ -15,7 +15,7 @@ namespace DuplicateFileFinder.Tests
             var fileFinder = new FileFinder(directoryParser.Object);
             fileFinder.FindAllFiles(rootDirectory);
 
-            directoryParser.Verify(dp => dp.FindAllFiles(rootDirectory));
+            directoryParser.Verify(dp => dp.FindAllDirectories(rootDirectory));
         }
     }
 }

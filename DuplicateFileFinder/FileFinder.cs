@@ -9,9 +9,9 @@
             _directoryParserObject = directoryParserObject;
         }
 
-        public object FindAllFiles(string rootDirectory)
+        public void FindAllFiles(string rootDirectory)
         {
-            return _directoryParserObject.FindAllFiles(rootDirectory);
+            var directories = _directoryParserObject.FindAllDirectories(rootDirectory);
         }
     }
 }

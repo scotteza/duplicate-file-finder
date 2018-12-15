@@ -1,7 +1,9 @@
-﻿namespace DuplicateFileFinder
+﻿using System.Collections.Generic;
+
+namespace DuplicateFileFinder
 {
     public interface IDirectoryParser
     {
-        object FindAllFiles(string rootDirectory);
+        List<DirectoryData> FindAllDirectories(string rootDirectory);
     }
 }
