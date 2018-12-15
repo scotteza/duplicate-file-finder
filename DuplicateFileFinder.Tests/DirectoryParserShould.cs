@@ -35,32 +35,7 @@ namespace DuplicateFileFinder.Tests
             SetFileNames();
             CreateDirectories();
             CreateFiles();
-            _directoryParser = new WindowsDirectoryParser();
-        }
-
-        private void CreateFiles()
-        {
-            File.Create(_testFilePath1).Close();
-            File.Create(_testFilePath2).Close();
-            File.Create(_testFilePath3).Close();
-        }
-
-        private void CreateDirectories()
-        {
-            Directory.CreateDirectory(_directoryPath1);
-            Directory.CreateDirectory(_directoryPath2);
-            Directory.CreateDirectory(_directoryPath3);
-        }
-
-        private void SetFileNames()
-        {
-            _testFileName1 = "Test File 1.txt";
-            _testFileName2 = "Test File 2.txt";
-            _testFileName3 = "Test File 3.txt";
-
-            _testFilePath1 = Path.Combine(_directoryPath1, _testFileName1);
-            _testFilePath2 = Path.Combine(_directoryPath1, _testFileName2);
-            _testFilePath3 = Path.Combine(_directoryPath1, _testFileName3);
+            CreateDirectoryParser();
         }
 
         private void SetDirectoryNames()
@@ -74,6 +49,36 @@ namespace DuplicateFileFinder.Tests
             _directoryPath1 = Path.Combine(_rootDirectory, _testDirectoryName1);
             _directoryPath2 = Path.Combine(_rootDirectory, _testDirectoryName2);
             _directoryPath3 = Path.Combine(_rootDirectory, _testDirectoryName3);
+        }
+
+        private void SetFileNames()
+        {
+            _testFileName1 = "Test File 1.txt";
+            _testFileName2 = "Test File 2.txt";
+            _testFileName3 = "Test File 3.txt";
+
+            _testFilePath1 = Path.Combine(_directoryPath1, _testFileName1);
+            _testFilePath2 = Path.Combine(_directoryPath1, _testFileName2);
+            _testFilePath3 = Path.Combine(_directoryPath1, _testFileName3);
+        }
+
+        private void CreateDirectories()
+        {
+            Directory.CreateDirectory(_directoryPath1);
+            Directory.CreateDirectory(_directoryPath2);
+            Directory.CreateDirectory(_directoryPath3);
+        }
+
+        private void CreateFiles()
+        {
+            File.Create(_testFilePath1).Close();
+            File.Create(_testFilePath2).Close();
+            File.Create(_testFilePath3).Close();
+        }
+
+        private void CreateDirectoryParser()
+        {
+            _directoryParser = new WindowsDirectoryParser();
         }
 
         [Test]
