@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DuplicateFileFinder.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\scott\\Google Drive\""
+    }
+  }
+}
