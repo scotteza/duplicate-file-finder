@@ -1,4 +1,7 @@
-﻿namespace DuplicateFileFinder
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace DuplicateFileFinder
 {
     public class DuplicateFileFinder
     {
@@ -9,13 +12,24 @@
             _directoryParser = directoryParser;
         }
 
-        public object GetDuplicates(string rootDirectory)
+        public List<DuplicateFile> GetDuplicates(string rootDirectory)
         {
-            var directories = _directoryParser.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes);
+            List<DuplicateFile> result = new List<DuplicateFile>();
 
+            var directories = _directoryParser.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes);
             var files = _directoryParser.FindAllFiles(directories);
 
-            return null;
+            var distinctFileNames = files.Select(f => f.Name).Distinct();
+            foreach (var distinctFileName in distinctFileNames)
+            {
+                var fileCount = files.Count(f => f.Name == distinctFileName);
+                if (fileCount > 1)
+                {
+                    result.Add(new DuplicateFile(distinctFileName, fileCount));
+                }
+            }
+
+            return result;
         }
     }
 }

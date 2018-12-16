@@ -1,14 +1,12 @@
-﻿using System.IO;
-
-namespace DuplicateFileFinder
+﻿namespace DuplicateFileFinder
 {
     public class FileData
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public FileData(FileInfo fi)
+        public FileData(string name)
         {
-            Name = fi.Name;
+            Name = name;
         }
 
         public override string ToString()

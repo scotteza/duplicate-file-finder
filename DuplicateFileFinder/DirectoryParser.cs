@@ -6,6 +6,6 @@ namespace DuplicateFileFinder
     {
         List<DirectoryData> FindAllDirectories(string rootDirectory, IncludeRootDirectoryInResults includeRootDirectoryInResults);
         List<FileData> FindAllFiles(DirectoryData directoryData);
-        List<FileData> FindAllFiles(IEnumerable<DirectoryData> directories);
+        List<FileData> FindAllFiles(List<DirectoryData> directories);
     }
 }
