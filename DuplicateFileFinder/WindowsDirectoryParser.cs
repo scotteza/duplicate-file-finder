@@ -8,11 +8,13 @@ namespace DuplicateFileFinder
     {
         public List<DirectoryData> FindAllDirectories(string rootDirectory, IncludeRootDirectoryInResults includeRootDirectoryInResults)
         {
+            var rootDirectoryInfo = new DirectoryInfo(rootDirectory);
+
             var directories =
-                            new DirectoryInfo(rootDirectory)
-                                .GetDirectories()
-                                .Select(di => new DirectoryData(di))
-                                .ToList();
+                            rootDirectoryInfo
+                            .GetDirectories()
+                            .Select(di => new DirectoryData(di.Name, di.FullName))
+                            .ToList();
 
             foreach (var directory in directories.ToList())
             {
@@ -21,7 +23,7 @@ namespace DuplicateFileFinder
 
             if (includeRootDirectoryInResults == IncludeRootDirectoryInResults.Yes)
             {
-                directories.Add(new DirectoryData(new DirectoryInfo(rootDirectory)));
+                directories.Add(new DirectoryData(rootDirectoryInfo.Name, rootDirectoryInfo.FullName));
             }
 
             return directories;
