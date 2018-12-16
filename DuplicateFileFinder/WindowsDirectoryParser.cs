@@ -6,7 +6,7 @@ namespace DuplicateFileFinder
 {
     public class WindowsDirectoryParser : IDirectoryParser
     {
-        public List<DirectoryData> FindAllDirectories(string rootDirectory, bool includeRootDirectoryInResults)
+        public List<DirectoryData> FindAllDirectories(string rootDirectory, IncludeRootDirectoryInResults includeRootDirectoryInResults)
         {
             var directories =
                             new DirectoryInfo(rootDirectory)
@@ -16,10 +16,10 @@ namespace DuplicateFileFinder
 
             foreach (var directory in directories.ToList())
             {
-                directories.AddRange(FindAllDirectories(directory.FullPath, false));
+                directories.AddRange(FindAllDirectories(directory.FullPath, IncludeRootDirectoryInResults.No));
             }
 
-            if (includeRootDirectoryInResults)
+            if (includeRootDirectoryInResults == IncludeRootDirectoryInResults.Yes)
             {
                 directories.Add(new DirectoryData(new DirectoryInfo(rootDirectory)));
             }

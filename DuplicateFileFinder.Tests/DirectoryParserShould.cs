@@ -1,7 +1,6 @@
-﻿using System.IO;
+﻿using NUnit.Framework;
+using System.IO;
 using System.Linq;
-using System.Threading;
-using NUnit.Framework;
 
 namespace DuplicateFileFinder.Tests
 {
@@ -121,7 +120,7 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Parse_A_Directory_Structure()
         {
-            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, false);
+            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, IncludeRootDirectoryInResults.No);
 
             Assert.That(directories.Count, Is.EqualTo(6));
             Assert.That(directories.Any(d => d.Name == _testDirectoryName1), Is.EqualTo(true));
@@ -135,7 +134,7 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Parse_A_Directory_Structure_And_Include_The_Root_Directory_In_Results()
         {
-            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, true);
+            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, IncludeRootDirectoryInResults.Yes);
 
             Assert.That(directories.Count, Is.EqualTo(7));
             Assert.That(directories.Any(d => d.Name == _testDirectoryName1), Is.EqualTo(true));
@@ -150,7 +149,7 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Find_Files_In_A_Single_Directory()
         {
-            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, true);
+            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, IncludeRootDirectoryInResults.Yes);
             var directoryData = directories.First(d => d.Name == _testDirectoryName1);
             var files = _directoryParser.FindAllFiles(directoryData);
 
@@ -163,7 +162,7 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Find_Files_In_A_Collection_Of_Directories()
         {
-            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, true);
+            var directories = _directoryParser.FindAllDirectories(_rootDirectoryPath, IncludeRootDirectoryInResults.Yes);
             var files = _directoryParser.FindAllFiles(directories);
 
             Assert.That(files.Count, Is.EqualTo(7));
