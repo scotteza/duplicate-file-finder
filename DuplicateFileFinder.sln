@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuplicateFileFinder", "Dupl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuplicateFileFinder.Tests", "DuplicateFileFinder.Tests\DuplicateFileFinder.Tests.csproj", "{EA3B6D39-300B-4CC3-AD8B-EB3947820916}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuplicateFileFinder.ConsoleApp", "DuplicateFileFinder.Console\DuplicateFileFinder.ConsoleApp.csproj", "{385048E7-0449-4867-A7B4-9D396E58D1DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuplicateFileFinder.ConsoleApp", "DuplicateFileFinder.Console\DuplicateFileFinder.ConsoleApp.csproj", "{385048E7-0449-4867-A7B4-9D396E58D1DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

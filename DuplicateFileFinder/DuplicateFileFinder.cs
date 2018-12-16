@@ -14,7 +14,7 @@ namespace DuplicateFileFinder
 
         public List<DuplicateFile> GetDuplicates(string rootDirectory)
         {
-            List<DuplicateFile> result = new List<DuplicateFile>();
+            var result = new List<DuplicateFile>();
 
             var directories = _directoryParser.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes);
             var files = _directoryParser.FindAllFiles(directories);
