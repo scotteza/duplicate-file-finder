@@ -34,7 +34,7 @@ namespace DuplicateFileFinder.ConsoleApp
             var directories = directoryParser.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes);
             var files = directoryParser.FindAllFiles(directories);
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(files.Count);
             Console.ReadLine();
         }
 

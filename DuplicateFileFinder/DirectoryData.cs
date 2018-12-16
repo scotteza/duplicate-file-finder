@@ -4,8 +4,8 @@ namespace DuplicateFileFinder
 {
     public class DirectoryData
     {
-        public string Name { get; set; }
-        public string FullPath { get; set; }
+        public string Name { get; private set; }
+        public string FullPath { get; private set; }
 
         public DirectoryData(DirectoryInfo di)
         {

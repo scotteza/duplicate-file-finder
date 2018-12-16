@@ -4,7 +4,7 @@ namespace DuplicateFileFinder
 {
     public class FileData
     {
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         public FileData(FileInfo fi)
         {
