@@ -31,10 +31,15 @@ namespace DuplicateFileFinder.ConsoleApp
             }
 
             var directoryParser = new WindowsDirectoryParser();
-            var directories = directoryParser.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes);
-            var files = directoryParser.FindAllFiles(directories);
+            var duplicateFileFinder = new DuplicateFileFinder(directoryParser);
+            var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory);
 
-            Console.WriteLine(files.Count);
+            foreach (var duplicateFile in duplicateFiles)
+            {
+                Console.WriteLine($"{duplicateFile.Name}: {duplicateFile.Count}");
+            }
+
+            Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
         }
 
