@@ -6,17 +6,22 @@ namespace DuplicateFileFinder
 {
     public class WindowsDirectoryParser : IDirectoryParser
     {
-        public List<DirectoryData> FindAllDirectories(string rootDirectory)
+        public List<DirectoryData> FindAllDirectories(string rootDirectory, bool includeRootDirectoryInResults)
         {
             var directories =
-                new DirectoryInfo(rootDirectory)
-                    .GetDirectories()
-                    .Select(di => new DirectoryData(di))
-                    .ToList();
+                            new DirectoryInfo(rootDirectory)
+                                .GetDirectories()
+                                .Select(di => new DirectoryData(di))
+                                .ToList();
 
             foreach (var directory in directories.ToList())
             {
-                directories.AddRange(FindAllDirectories(directory.FullPath));
+                directories.AddRange(FindAllDirectories(directory.FullPath, false));
+            }
+
+            if (includeRootDirectoryInResults)
+            {
+                directories.Add(new DirectoryData(new DirectoryInfo(rootDirectory)));
             }
 
             return directories;
