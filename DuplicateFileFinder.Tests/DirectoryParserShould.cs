@@ -13,18 +13,30 @@ namespace DuplicateFileFinder.Tests
         private string _testDirectoryName1;
         private string _testDirectoryName2;
         private string _testDirectoryName3;
+        private string _testDirectoryName4;
+        private string _testDirectoryName5;
+        private string _testDirectoryName6;
 
         private string _directoryPath1;
         private string _directoryPath2;
         private string _directoryPath3;
+        private string _directoryPath4;
+        private string _directoryPath5;
+        private string _directoryPath6;
 
         private string _testFileName1;
         private string _testFileName2;
         private string _testFileName3;
+        private string _testFileName4;
+        private string _testFileName5;
+        private string _testFileName6;
 
         private string _testFilePath1;
         private string _testFilePath2;
         private string _testFilePath3;
+        private string _testFilePath4;
+        private string _testFilePath5;
+        private string _testFilePath6;
 
         private IDirectoryParser _directoryParser;
 
@@ -45,10 +57,17 @@ namespace DuplicateFileFinder.Tests
             _testDirectoryName1 = "Test Folder 1";
             _testDirectoryName2 = "Test Folder 2";
             _testDirectoryName3 = "Test Folder 3";
+            _testDirectoryName4 = "Test Folder 4";
+            _testDirectoryName5 = "Test Folder 5";
+            _testDirectoryName6 = "Test Folder 6";
 
             _directoryPath1 = Path.Combine(_rootDirectory, _testDirectoryName1);
             _directoryPath2 = Path.Combine(_rootDirectory, _testDirectoryName2);
             _directoryPath3 = Path.Combine(_rootDirectory, _testDirectoryName3);
+            // Deeper-level directories
+            _directoryPath4 = Path.Combine(_directoryPath1, _testDirectoryName4);
+            _directoryPath5 = Path.Combine(_directoryPath4, _testDirectoryName5);
+            _directoryPath6 = Path.Combine(_directoryPath4, _testDirectoryName6);
         }
 
         private void SetFileNames()
@@ -56,10 +75,16 @@ namespace DuplicateFileFinder.Tests
             _testFileName1 = "Test File 1.txt";
             _testFileName2 = "Test File 2.txt";
             _testFileName3 = "Test File 3.txt";
+            _testFileName4 = "Test File 4.txt";
+            _testFileName5 = "Test File 5.txt";
+            _testFileName6 = "Test File 6.txt";
 
             _testFilePath1 = Path.Combine(_directoryPath1, _testFileName1);
             _testFilePath2 = Path.Combine(_directoryPath1, _testFileName2);
             _testFilePath3 = Path.Combine(_directoryPath1, _testFileName3);
+            _testFilePath4 = Path.Combine(_directoryPath4, _testFileName4);
+            _testFilePath5 = Path.Combine(_directoryPath6, _testFileName5);
+            _testFilePath6 = Path.Combine(_directoryPath6, _testFileName6);
         }
 
         private void CreateDirectories()
@@ -67,6 +92,9 @@ namespace DuplicateFileFinder.Tests
             Directory.CreateDirectory(_directoryPath1);
             Directory.CreateDirectory(_directoryPath2);
             Directory.CreateDirectory(_directoryPath3);
+            Directory.CreateDirectory(_directoryPath4);
+            Directory.CreateDirectory(_directoryPath5);
+            Directory.CreateDirectory(_directoryPath6);
         }
 
         private void CreateFiles()
@@ -74,6 +102,9 @@ namespace DuplicateFileFinder.Tests
             File.Create(_testFilePath1).Close();
             File.Create(_testFilePath2).Close();
             File.Create(_testFilePath3).Close();
+            File.Create(_testFilePath4).Close();
+            File.Create(_testFilePath5).Close();
+            File.Create(_testFilePath6).Close();
         }
 
         private void CreateDirectoryParser()
@@ -82,14 +113,17 @@ namespace DuplicateFileFinder.Tests
         }
 
         [Test]
-        public void Parse_A_Single_Level_Directory()
+        public void Parse_A_Directory_Structure()
         {
             var directories = _directoryParser.FindAllDirectories(_rootDirectory);
 
-            Assert.That(directories.Count, Is.EqualTo(3));
+            Assert.That(directories.Count, Is.EqualTo(6));
             Assert.That(directories.Any(d => d.Name == _testDirectoryName1), Is.EqualTo(true));
             Assert.That(directories.Any(d => d.Name == _testDirectoryName2), Is.EqualTo(true));
             Assert.That(directories.Any(d => d.Name == _testDirectoryName3), Is.EqualTo(true));
+            Assert.That(directories.Any(d => d.Name == _testDirectoryName4), Is.EqualTo(true));
+            Assert.That(directories.Any(d => d.Name == _testDirectoryName5), Is.EqualTo(true));
+            Assert.That(directories.Any(d => d.Name == _testDirectoryName6), Is.EqualTo(true));
         }
 
         [Test]
@@ -111,8 +145,13 @@ namespace DuplicateFileFinder.Tests
             File.Delete(_testFilePath1);
             File.Delete(_testFilePath2);
             File.Delete(_testFilePath3);
+            File.Delete(_testFilePath4);
+            File.Delete(_testFilePath5);
+            File.Delete(_testFilePath6);
 
-            Directory.Delete(_directoryPath1, recursive: false);
+            Directory.Delete(_directoryPath5, recursive: false);
+            Directory.Delete(_directoryPath6, recursive: false);
+            Directory.Delete(_directoryPath4, recursive: false);
             Directory.Delete(_directoryPath2, recursive: false);
             Directory.Delete(_directoryPath3, recursive: false);
         }

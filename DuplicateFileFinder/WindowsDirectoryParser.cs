@@ -10,7 +10,13 @@ namespace DuplicateFileFinder
         {
             var directoryInfo = new DirectoryInfo(rootDirectory);
             var directoryInfos = directoryInfo.GetDirectories();
-            return directoryInfos.Select(di => new DirectoryData(di)).ToList();
+            var directories = directoryInfos.Select(di => new DirectoryData(di)).ToList();
+            foreach (var directory in directories.ToList())
+            {
+                var subDirectories = FindAllDirectories(directory.FullPath);
+                directories.AddRange(subDirectories);
+            }
+            return directories;
         }
 
         public List<FileData> FindAllFiles(DirectoryData directoryData)
