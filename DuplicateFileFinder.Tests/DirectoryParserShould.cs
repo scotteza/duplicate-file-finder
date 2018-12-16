@@ -139,6 +139,21 @@ namespace DuplicateFileFinder.Tests
             Assert.That(files.Any(f => f.Name == _testFileName3), Is.EqualTo(true));
         }
 
+        [Test]
+        public void Find_Files_In_A_Collection_Of_Directories()
+        {
+            var directories = _directoryParser.FindAllDirectories(_rootDirectory);
+            var files = _directoryParser.FindAllFiles(directories);
+
+            Assert.That(files.Count, Is.EqualTo(6));
+            Assert.That(files.Any(f => f.Name == _testFileName1), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == _testFileName2), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == _testFileName3), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == _testFileName4), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == _testFileName5), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == _testFileName6), Is.EqualTo(true));
+        }
+
         [TearDown]
         public void TearDown()
         {
