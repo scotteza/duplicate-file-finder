@@ -7,14 +7,14 @@ namespace DuplicateFileFinder.Tests
 {
     public class FileHashDuplicatePatternMatcherShould
     {
-        private Mock<FileHasher> _fileHasher;
-        private FileHashDuplicatePatternMatcher _matcher;
+        private Mock<FileHasher> fileHasher;
+        private FileHashDuplicatePatternMatcher matcher;
 
         [SetUp]
         public void SetUp()
         {
-            _fileHasher = new Mock<FileHasher>();
-            _matcher = new FileHashDuplicatePatternMatcher(_fileHasher.Object);
+            fileHasher = new Mock<FileHasher>();
+            matcher = new FileHashDuplicatePatternMatcher(fileHasher.Object);
         }
 
         [Test]
@@ -30,11 +30,11 @@ namespace DuplicateFileFinder.Tests
                 file3
             };
 
-            _matcher.FindDuplicates(files);
+            matcher.FindDuplicates(files);
 
-            _fileHasher.Verify(x => x.HashFile(file1));
-            _fileHasher.Verify(x => x.HashFile(file2));
-            _fileHasher.Verify(x => x.HashFile(file3));
+            fileHasher.Verify(x => x.HashFile(file1));
+            fileHasher.Verify(x => x.HashFile(file2));
+            fileHasher.Verify(x => x.HashFile(file3));
         }
 
         [Test]
@@ -49,11 +49,11 @@ namespace DuplicateFileFinder.Tests
                 file2,
                 file3
             };
-            _fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
-            _fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
-            _fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
 
-            var duplicates = _matcher.FindDuplicates(files);
+            var duplicates = matcher.FindDuplicates(files);
 
             Assert.That(duplicates.Count, Is.EqualTo(1));
             Assert.That(duplicates.Contains(new DuplicateFile("ABC", 3)));
@@ -81,16 +81,16 @@ namespace DuplicateFileFinder.Tests
                 file7,
                 file8
             };
-            _fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
-            _fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
-            _fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
-            _fileHasher.Setup(x => x.HashFile(file4)).Returns("DEF");
-            _fileHasher.Setup(x => x.HashFile(file5)).Returns("DEF");
-            _fileHasher.Setup(x => x.HashFile(file6)).Returns("XXX");
-            _fileHasher.Setup(x => x.HashFile(file7)).Returns("YYY");
-            _fileHasher.Setup(x => x.HashFile(file8)).Returns("ZZZ");
+            fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file4)).Returns("DEF");
+            fileHasher.Setup(x => x.HashFile(file5)).Returns("DEF");
+            fileHasher.Setup(x => x.HashFile(file6)).Returns("XXX");
+            fileHasher.Setup(x => x.HashFile(file7)).Returns("YYY");
+            fileHasher.Setup(x => x.HashFile(file8)).Returns("ZZZ");
 
-            var duplicates = _matcher.FindDuplicates(files);
+            var duplicates = matcher.FindDuplicates(files);
 
             Assert.That(duplicates.Count, Is.EqualTo(2));
             Assert.That(duplicates.Contains(new DuplicateFile("ABC", 3)));

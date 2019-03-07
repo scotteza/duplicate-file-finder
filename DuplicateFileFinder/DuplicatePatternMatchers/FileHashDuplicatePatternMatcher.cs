@@ -5,11 +5,11 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
 {
     public class FileHashDuplicatePatternMatcher : DuplicatePatternMatcher
     {
-        private readonly FileHasher _fileHasher;
+        private readonly FileHasher fileHasher;
 
         public FileHashDuplicatePatternMatcher(FileHasher fileHasher)
         {
-            _fileHasher = fileHasher;
+            this.fileHasher = fileHasher;
         }
 
         public List<DuplicateFile> FindDuplicates(List<FileData> files)
@@ -27,9 +27,9 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
                     .ToList();
         }
 
-        private void AddFileToHashList(Dictionary<string, int> allHashes, FileData file)
+        private void AddFileToHashList(IDictionary<string, int> allHashes, FileData file)
         {
-            var hash = _fileHasher.HashFile(file);
+            var hash = fileHasher.HashFile(file);
 
             if (!IsValidHash(hash))
             {
@@ -44,7 +44,7 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
             return hash != null;
         }
 
-        private void IncrementHashCount(Dictionary<string, int> allHashes, string hash)
+        private void IncrementHashCount(IDictionary<string, int> allHashes, string hash)
         {
             if (!allHashes.ContainsKey(hash))
             {

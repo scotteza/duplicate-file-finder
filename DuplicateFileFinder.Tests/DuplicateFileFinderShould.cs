@@ -9,74 +9,74 @@ namespace DuplicateFileFinder.Tests
     [TestFixture]
     internal class DuplicateFileFinderShould
     {
-        private Mock<IDirectoryParser> _directoryParser;
-        private DuplicateFileFinder _duplicateFileFinder;
-        private FileNameDuplicatePatternMatcher _fileNameDuplicatePatternMatcher;
+        private Mock<IDirectoryParser> directoryParser;
+        private DuplicateFileFinder duplicateFileFinder;
+        private FileNameDuplicatePatternMatcher fileNameDuplicatePatternMatcher;
 
-        private string _rootDirectory;
-        private List<DirectoryData> _directories;
+        private string rootDirectory;
+        private List<DirectoryData> directories;
 
-        private string _duplicateFileName1;
-        private string _duplicateFileName2;
-        private List<FileData> _files;
+        private string duplicateFileName1;
+        private string duplicateFileName2;
+        private List<FileData> files;
 
         [SetUp]
         public void SetUp()
         {
-            _fileNameDuplicatePatternMatcher = new FileNameDuplicatePatternMatcher();
+            fileNameDuplicatePatternMatcher = new FileNameDuplicatePatternMatcher();
 
-            _rootDirectory = ".";
-            _directories = new List<DirectoryData>
+            rootDirectory = ".";
+            directories = new List<DirectoryData>
             {
                 new DirectoryData("Directory 1", @"c:\Directory 1"),
                 new DirectoryData("Directory 2", @"c:\Directory 2"),
                 new DirectoryData("Directory 3", @"c:\Directory 3")
             };
 
-            _duplicateFileName1 = "File 1.txt";
-            _duplicateFileName2 = "File 2.txt";
-            _files = new List<FileData>
+            duplicateFileName1 = "File 1.txt";
+            duplicateFileName2 = "File 2.txt";
+            files = new List<FileData>
             {
-                new FileData(_duplicateFileName1),
-                new FileData(_duplicateFileName1),
-                new FileData(_duplicateFileName1),
-                new FileData(_duplicateFileName2),
-                new FileData(_duplicateFileName2),
-                new FileData(_duplicateFileName2),
-                new FileData(_duplicateFileName2),
-                new FileData(_duplicateFileName2),
-                new FileData(_duplicateFileName2),
+                new FileData(duplicateFileName1),
+                new FileData(duplicateFileName1),
+                new FileData(duplicateFileName1),
+                new FileData(duplicateFileName2),
+                new FileData(duplicateFileName2),
+                new FileData(duplicateFileName2),
+                new FileData(duplicateFileName2),
+                new FileData(duplicateFileName2),
+                new FileData(duplicateFileName2),
                 new FileData("File 3.txt")
             };
 
-            _directoryParser = new Mock<IDirectoryParser>();
-            _directoryParser
-                .Setup(dp => dp.FindAllDirectories(_rootDirectory, IncludeRootDirectoryInResults.Yes))
-                .Returns(_directories);
-            _directoryParser
+            directoryParser = new Mock<IDirectoryParser>();
+            directoryParser
+                .Setup(dp => dp.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes))
+                .Returns(directories);
+            directoryParser
                 .Setup(dp => dp.FindAllFiles(It.IsAny<List<DirectoryData>>()))
-                .Returns(_files);
+                .Returns(files);
 
-            _duplicateFileFinder = new DuplicateFileFinder(_directoryParser.Object);
+            duplicateFileFinder = new DuplicateFileFinder(directoryParser.Object);
         }
 
         [Test]
         public void Find_Duplicate_File_Using_A_DirectoryParser()
         {
-            _duplicateFileFinder.GetDuplicates(_rootDirectory, _fileNameDuplicatePatternMatcher);
+            duplicateFileFinder.GetDuplicates(rootDirectory, fileNameDuplicatePatternMatcher);
 
-            _directoryParser.Verify(dp => dp.FindAllDirectories(_rootDirectory, IncludeRootDirectoryInResults.Yes));
-            _directoryParser.Verify(dp => dp.FindAllFiles(_directories));
+            directoryParser.Verify(dp => dp.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes));
+            directoryParser.Verify(dp => dp.FindAllFiles(directories));
         }
 
         [Test]
         public void Find_Duplicate_File_By_Name()
         {
-            var duplicates = _duplicateFileFinder.GetDuplicates(_rootDirectory, _fileNameDuplicatePatternMatcher);
+            var duplicates = duplicateFileFinder.GetDuplicates(rootDirectory, fileNameDuplicatePatternMatcher);
 
             Assert.That(duplicates.Count, Is.EqualTo(2));
-            Assert.That(duplicates.First(d => d.Name == _duplicateFileName1).Count, Is.EqualTo(3));
-            Assert.That(duplicates.First(d => d.Name == _duplicateFileName2).Count, Is.EqualTo(6));
+            Assert.That(duplicates.First(d => d.Name == duplicateFileName1).Count, Is.EqualTo(3));
+            Assert.That(duplicates.First(d => d.Name == duplicateFileName2).Count, Is.EqualTo(6));
         }
     }
 }

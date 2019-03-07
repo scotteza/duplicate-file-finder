@@ -36,7 +36,7 @@ namespace DuplicateFileFinder
             return fileInfos.Select(fi => new FileData(fi.Name)).ToList();
         }
 
-        public List<FileData> FindAllFiles(List<DirectoryData> directories)
+        public List<FileData> FindAllFiles(IEnumerable<DirectoryData> directories)
         {
             var files = new List<FileData>();
 
