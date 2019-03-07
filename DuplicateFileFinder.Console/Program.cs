@@ -1,8 +1,8 @@
 ﻿using DuplicateFileFinder.DuplicatePatternMatchers;
+using DuplicateFileFinder.FileHashers;
 using System;
 using System.IO;
 using System.Linq;
-using DuplicateFileFinder.FileHashers;
 
 namespace DuplicateFileFinder.ConsoleApp
 {
@@ -43,8 +43,10 @@ namespace DuplicateFileFinder.ConsoleApp
                 Console.WriteLine($"{duplicateFile.Name}: {duplicateFile.Count}");
             }
 
+            Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
-            Console.ReadLine();
+            
+            Console.ReadKey();
         }
 
         private static void WriteInvalidDirectoryMessage()

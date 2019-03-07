@@ -32,7 +32,7 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
         {
             var hash = fileHasher.HashFile(file);
 
-            if (!IsValidHash(hash))
+            if (IsInvalidValidHash(hash))
             {
                 return;
             }
@@ -40,9 +40,9 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
             IncrementHashCount(allHashes, hash);
         }
 
-        private bool IsValidHash(string hash)
+        private bool IsInvalidValidHash(string hash)
         {
-            return hash != null;
+            return hash == null;
         }
 
         private void IncrementHashCount(IDictionary<string, int> allHashes, string hash)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DuplicateFileFinder.FileHashers
 {
@@ -6,7 +8,26 @@ namespace DuplicateFileFinder.FileHashers
     {
         public string HashFile(FileData fileData)
         {
-            throw new NotImplementedException();
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(fileData.FullName))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return ByteHasToString(hash);
+                }
+            }
+        }
+
+        private string ByteHasToString(byte[] hash)
+        {
+            var resultBuilder = new StringBuilder();
+
+            foreach (var b in hash)
+            {
+                resultBuilder.Append(b.ToString("x2"));
+            }
+
+            return resultBuilder.ToString();
         }
     }
 }
