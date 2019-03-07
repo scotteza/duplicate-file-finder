@@ -32,7 +32,8 @@ namespace DuplicateFileFinder.ConsoleApp
 
             var directoryParser = new WindowsDirectoryParser();
             var duplicateFileFinder = new DuplicateFileFinder(directoryParser);
-            var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory);
+            var fileNameDuplicatePatternMatcher = new FileNameDuplicatePatternMatcher();
+            var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory, fileNameDuplicatePatternMatcher);
 
             foreach (var duplicateFile in duplicateFiles)
             {

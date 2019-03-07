@@ -10,6 +10,7 @@ namespace DuplicateFileFinder.Tests
     {
         private Mock<IDirectoryParser> _directoryParser;
         private DuplicateFileFinder _duplicateFileFinder;
+        private FileNameDuplicatePatternMatcher _fileNameDuplicatePatternMatcher;
 
         private string _rootDirectory;
         private List<DirectoryData> _directories;
@@ -21,6 +22,8 @@ namespace DuplicateFileFinder.Tests
         [SetUp]
         public void SetUp()
         {
+            _fileNameDuplicatePatternMatcher = new FileNameDuplicatePatternMatcher();
+
             _rootDirectory = ".";
             _directories = new List<DirectoryData>
             {
@@ -59,7 +62,7 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Find_Duplicate_File_Using_A_DirectoryParser()
         {
-            _duplicateFileFinder.GetDuplicates(_rootDirectory);
+            _duplicateFileFinder.GetDuplicates(_rootDirectory, _fileNameDuplicatePatternMatcher);
 
             _directoryParser.Verify(dp => dp.FindAllDirectories(_rootDirectory, IncludeRootDirectoryInResults.Yes));
             _directoryParser.Verify(dp => dp.FindAllFiles(_directories));
@@ -68,7 +71,7 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Find_Duplicate_File_By_Name()
         {
-            var duplicates = _duplicateFileFinder.GetDuplicates(_rootDirectory);
+            var duplicates = _duplicateFileFinder.GetDuplicates(_rootDirectory, _fileNameDuplicatePatternMatcher);
 
             Assert.That(duplicates.Count, Is.EqualTo(2));
             Assert.That(duplicates.First(d => d.Name == _duplicateFileName1).Count, Is.EqualTo(3));

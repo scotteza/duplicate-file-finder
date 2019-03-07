@@ -12,24 +12,11 @@ namespace DuplicateFileFinder
             _directoryParser = directoryParser;
         }
 
-        public List<DuplicateFile> GetDuplicates(string rootDirectory)
+        public List<DuplicateFile> GetDuplicates(string rootDirectory, DuplicatePatternMatcher duplicatePatternMatcher)
         {
-            var result = new List<DuplicateFile>();
-
             var directories = _directoryParser.FindAllDirectories(rootDirectory, IncludeRootDirectoryInResults.Yes);
             var files = _directoryParser.FindAllFiles(directories);
-
-            var distinctFileNames = files.Select(f => f.Name).Distinct();
-            foreach (var distinctFileName in distinctFileNames)
-            {
-                var fileCount = files.Count(f => f.Name == distinctFileName);
-                if (fileCount > 1)
-                {
-                    result.Add(new DuplicateFile(distinctFileName, fileCount));
-                }
-            }
-
-            return result;
+            return duplicatePatternMatcher.FindDuplicates(files);
         }
     }
 }
