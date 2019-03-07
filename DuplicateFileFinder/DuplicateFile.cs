@@ -2,18 +2,18 @@
 {
     public class DuplicateFile
     {
-        public string Name { get; }
+        public string Identifier { get; }
         public int Count { get; }
 
-        public DuplicateFile(string name, int count)
+        public DuplicateFile(string identifier, int count)
         {
-            Name = name;
+            Identifier = identifier;
             Count = count;
         }
 
         protected bool Equals(DuplicateFile other)
         {
-            return string.Equals(Name, other.Name) && Count == other.Count;
+            return string.Equals(Identifier, other.Identifier) && Count == other.Count;
         }
 
         public override bool Equals(object obj)
@@ -28,7 +28,7 @@
         {
             unchecked
             {
-                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ Count;
+                return ((Identifier != null ? Identifier.GetHashCode() : 0) * 397) ^ Count;
             }
         }
     }

@@ -75,8 +75,8 @@ namespace DuplicateFileFinder.Tests
             var duplicates = duplicateFileFinder.GetDuplicates(rootDirectory, fileNameDuplicatePatternMatcher);
 
             Assert.That(duplicates.Count, Is.EqualTo(2));
-            Assert.That(duplicates.First(d => d.Name == duplicateFileName1).Count, Is.EqualTo(3));
-            Assert.That(duplicates.First(d => d.Name == duplicateFileName2).Count, Is.EqualTo(6));
+            Assert.That(duplicates.First(d => d.Identifier == duplicateFileName1).Count, Is.EqualTo(3));
+            Assert.That(duplicates.First(d => d.Identifier == duplicateFileName2).Count, Is.EqualTo(6));
         }
     }
 }

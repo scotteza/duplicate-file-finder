@@ -40,7 +40,7 @@ namespace DuplicateFileFinder.ConsoleApp
 
             foreach (var duplicateFile in duplicateFiles)
             {
-                Console.WriteLine($"{duplicateFile.Name}: {duplicateFile.Count}");
+                Console.WriteLine($"{duplicateFile.Identifier}: {duplicateFile.Count}");
             }
 
             Console.WriteLine();
