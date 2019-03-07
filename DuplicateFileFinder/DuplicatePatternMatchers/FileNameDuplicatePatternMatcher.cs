@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DuplicateFileFinder
+namespace DuplicateFileFinder.DuplicatePatternMatchers
 {
     public class FileNameDuplicatePatternMatcher : DuplicatePatternMatcher
     {
