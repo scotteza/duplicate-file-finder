@@ -10,12 +10,14 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
             var result = new List<DuplicateFile>();
 
             var distinctFileNames = files.Select(f => f.Name).Distinct();
+
             foreach (var distinctFileName in distinctFileNames)
             {
                 var fileCount = files.Count(f => f.Name == distinctFileName);
                 if (fileCount > 1)
                 {
-                    result.Add(new DuplicateFile(distinctFileName, fileCount));
+                    var duplicateFile = new DuplicateFile(distinctFileName, fileCount);
+                    result.Add(duplicateFile);
                 }
             }
 

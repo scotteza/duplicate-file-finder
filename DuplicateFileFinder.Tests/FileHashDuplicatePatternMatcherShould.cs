@@ -3,6 +3,7 @@ using DuplicateFileFinder.FileHashers;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DuplicateFileFinder.Tests
 {
@@ -96,6 +97,28 @@ namespace DuplicateFileFinder.Tests
             Assert.That(duplicates.Count, Is.EqualTo(2));
             Assert.That(duplicates.Contains(new DuplicateFile("ABC", 3)));
             Assert.That(duplicates.Contains(new DuplicateFile("DEF", 2)));
+        }
+
+        [Test]
+        public void Return_A_List_Of_Files_Per_Hash()
+        {
+            var file1 = new FileData("file 1.txt", "Full name 1");
+            var file2 = new FileData("file 2.txt", "Full name 2");
+            var file3 = new FileData("file 3.txt", "Full name 3");
+            var files = new List<FileData>
+            {
+                file1,
+                file2,
+                file3
+            };
+            fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
+            fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
+
+            var duplicates = matcher.FindDuplicates(files);
+
+            Assert.That(duplicates.Count, Is.EqualTo(1));
+            Assert.That(duplicates.First().DistinctFilePaths.Count, Is.EqualTo(3));
         }
     }
 }

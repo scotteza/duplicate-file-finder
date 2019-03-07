@@ -15,7 +15,7 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
 
         public List<DuplicateFile> FindDuplicates(List<FileData> files)
         {
-            var allHashes = new Dictionary<string, int>();
+            var allHashes = new Dictionary<string, List<FileData>>();
 
             foreach (var file in files)
             {
@@ -23,12 +23,12 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
             }
 
             return allHashes
-                    .Where(x => x.Value > 1)
-                    .Select(x => new DuplicateFile(x.Key, x.Value))
+                    .Where(x => x.Value.Count > 1)
+                    .Select(x => new DuplicateFile(x.Key, x.Value.Count, x.Value.Select(f=>f.FullName).ToList()))
                     .ToList();
         }
 
-        private void AddFileToHashList(IDictionary<string, int> allHashes, FileData file)
+        private void AddFileToHashList(IDictionary<string, List<FileData>> allHashes, FileData file)
         {
             var hash = fileHasher.HashFile(file);
 
@@ -37,22 +37,17 @@ namespace DuplicateFileFinder.DuplicatePatternMatchers
                 return;
             }
 
-            IncrementHashCount(allHashes, hash);
+            if (!allHashes.ContainsKey(hash))
+            {
+                allHashes.Add(hash, new List<FileData>());
+            }
+
+            allHashes[hash].Add(file);
         }
 
         private bool IsInvalidValidHash(string hash)
         {
             return hash == null;
-        }
-
-        private void IncrementHashCount(IDictionary<string, int> allHashes, string hash)
-        {
-            if (!allHashes.ContainsKey(hash))
-            {
-                allHashes.Add(hash, 0);
-            }
-
-            allHashes[hash] += 1;
         }
     }
 }
