@@ -41,11 +41,15 @@ namespace DuplicateFileFinder.ConsoleApp
             foreach (var duplicateFile in duplicateFiles)
             {
                 Console.WriteLine($"{duplicateFile.Identifier}: {duplicateFile.Count}");
+                foreach (var distinctFilePath in duplicateFile.DistinctFilePaths)
+                {
+                    Console.WriteLine($"\t{distinctFilePath}");
+                }
             }
 
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
-            
+
             Console.ReadKey();
         }
 
