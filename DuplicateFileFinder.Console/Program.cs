@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using DuplicateFileFinder.FileHashers;
 
 namespace DuplicateFileFinder.ConsoleApp
 {
@@ -33,8 +34,9 @@ namespace DuplicateFileFinder.ConsoleApp
 
             var directoryParser = new WindowsDirectoryParser();
             var duplicateFileFinder = new DuplicateFileFinder(directoryParser);
-            var fileNameDuplicatePatternMatcher = new FileNameDuplicatePatternMatcher();
-            var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory, fileNameDuplicatePatternMatcher);
+            var windowsFileHasher = new WindowsFileHasher();
+            var patternMatcher = new FileHashDuplicatePatternMatcher(windowsFileHasher);
+            var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory, patternMatcher);
 
             foreach (var duplicateFile in duplicateFiles)
             {

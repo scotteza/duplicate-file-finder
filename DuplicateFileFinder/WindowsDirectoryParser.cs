@@ -33,7 +33,7 @@ namespace DuplicateFileFinder
         {
             var directoryInfo = new DirectoryInfo(directoryData.FullPath);
             var fileInfos = directoryInfo.GetFiles();
-            return fileInfos.Select(fi => new FileData(fi.Name)).ToList();
+            return fileInfos.Select(fi => new FileData(fi.Name, fi.FullName)).ToList();
         }
 
         public List<FileData> FindAllFiles(IEnumerable<DirectoryData> directories)

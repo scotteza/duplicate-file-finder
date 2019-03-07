@@ -1,4 +1,5 @@
 ﻿using DuplicateFileFinder.DuplicatePatternMatchers;
+using DuplicateFileFinder.FileHashers;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;

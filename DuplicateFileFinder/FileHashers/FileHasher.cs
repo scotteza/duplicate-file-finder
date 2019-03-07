@@ -1,4 +1,4 @@
-﻿namespace DuplicateFileFinder
+﻿namespace DuplicateFileFinder.FileHashers
 {
     public interface FileHasher
     {

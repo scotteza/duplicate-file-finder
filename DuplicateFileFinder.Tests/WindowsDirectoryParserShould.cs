@@ -5,7 +5,7 @@ using System.Linq;
 namespace DuplicateFileFinder.Tests
 {
     [TestFixture]
-    internal class DirectoryParserShould
+    internal class WindowsDirectoryParserShould
     {
         private string rootDirectoryName;
         private string testDirectoryName1;
@@ -39,7 +39,7 @@ namespace DuplicateFileFinder.Tests
         private string testFilePath6;
         private string testFilePath7;
 
-        private IDirectoryParser directoryParser;
+        private WindowsDirectoryParser directoryParser;
 
         [SetUp]
         public void SetUp()
@@ -165,14 +165,16 @@ namespace DuplicateFileFinder.Tests
             var directories = directoryParser.FindAllDirectories(rootDirectoryPath, IncludeRootDirectoryInResults.Yes);
             var files = directoryParser.FindAllFiles(directories);
 
+            var currentDirectory = Directory.GetCurrentDirectory();
+
             Assert.That(files.Count, Is.EqualTo(7));
-            Assert.That(files.Any(f => f.Name == testFileName1), Is.EqualTo(true));
-            Assert.That(files.Any(f => f.Name == testFileName2), Is.EqualTo(true));
-            Assert.That(files.Any(f => f.Name == testFileName3), Is.EqualTo(true));
-            Assert.That(files.Any(f => f.Name == testFileName4), Is.EqualTo(true));
-            Assert.That(files.Any(f => f.Name == testFileName5), Is.EqualTo(true));
-            Assert.That(files.Any(f => f.Name == testFileName6), Is.EqualTo(true));
-            Assert.That(files.Any(f => f.Name == testFileName7), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == testFileName1 && f.FullName == Path.GetFullPath(testFilePath1)), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == testFileName2 && f.FullName == Path.GetFullPath(testFilePath2)), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == testFileName3 && f.FullName == Path.GetFullPath(testFilePath3)), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == testFileName4 && f.FullName == Path.GetFullPath(testFilePath4)), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == testFileName5 && f.FullName == Path.GetFullPath(testFilePath5)), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == testFileName6 && f.FullName == Path.GetFullPath(testFilePath6)), Is.EqualTo(true));
+            Assert.That(files.Any(f => f.Name == testFileName7 && f.FullName == Path.GetFullPath(testFilePath7)), Is.EqualTo(true));
         }
 
         [TearDown]
