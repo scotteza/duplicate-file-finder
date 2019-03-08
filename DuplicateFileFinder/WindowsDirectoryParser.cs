@@ -11,10 +11,10 @@ namespace DuplicateFileFinder
             var rootDirectoryInfo = new DirectoryInfo(rootDirectory);
 
             var directories =
-                            rootDirectoryInfo
-                            .GetDirectories()
-                            .Select(di => new DirectoryData(di.Name, di.FullName))
-                            .ToList();
+                rootDirectoryInfo
+                    .GetDirectories()
+                    .Select(di => new DirectoryData(di.Name, di.FullName))
+                    .ToList();
 
             foreach (var directory in directories.ToList())
             {
