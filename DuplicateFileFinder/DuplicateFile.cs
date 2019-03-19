@@ -4,26 +4,26 @@ namespace DuplicateFileFinder
 {
     public class DuplicateFile
     {
-        public string Identifier { get; }
+        public object Identifier { get; }
         public int Count { get; }
         private readonly List<string> distinctFilePaths;
         public IReadOnlyCollection<string> DistinctFilePaths => distinctFilePaths.AsReadOnly();
 
-        public DuplicateFile(string identifier, int count, List<string> distinctFilePaths)
+        public DuplicateFile(object identifier, int count, List<string> distinctFilePaths)
         {
             Identifier = identifier;
             Count = count;
             this.distinctFilePaths = distinctFilePaths;
         }
 
-        public DuplicateFile(string identifier, int count) : this(identifier, count, new List<string>())
+        public DuplicateFile(object identifier, int count) : this(identifier, count, new List<string>())
         {
         }
 
 
         protected bool Equals(DuplicateFile other)
         {
-            return string.Equals(Identifier, other.Identifier) && Count == other.Count;
+            return Equals(Identifier, other.Identifier) && Count == other.Count;
         }
 
         public override bool Equals(object obj)
@@ -31,7 +31,7 @@ namespace DuplicateFileFinder
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((DuplicateFile)obj);
+            return Equals((DuplicateFile) obj);
         }
 
         public override int GetHashCode()

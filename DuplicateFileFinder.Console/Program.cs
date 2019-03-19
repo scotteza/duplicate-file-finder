@@ -3,6 +3,7 @@ using DuplicateFileFinder.FileHashers;
 using System;
 using System.IO;
 using System.Linq;
+using DuplicateFileFinder.FileSizers;
 
 namespace DuplicateFileFinder.ConsoleApp
 {
@@ -34,13 +35,13 @@ namespace DuplicateFileFinder.ConsoleApp
 
             var directoryParser = new WindowsDirectoryParser();
             var duplicateFileFinder = new DuplicateFileFinder(directoryParser);
-            var windowsFileHasher = new WindowsFileHasher();
-            var patternMatcher = new FileHashDuplicatePatternMatcher(windowsFileHasher);
+            var windowsFileSizer = new WindowsFileSizer();
+            var patternMatcher = new FileSizeDuplicatePatternMatcher(windowsFileSizer);
             var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory, patternMatcher);
 
             foreach (var duplicateFile in duplicateFiles)
             {
-                Console.WriteLine($"{duplicateFile.Identifier}: {duplicateFile.Count}");
+                Console.WriteLine($"Identified by: {duplicateFile.Identifier}. Total count: {duplicateFile.Count}.");
                 foreach (var distinctFilePath in duplicateFile.DistinctFilePaths)
                 {
                     Console.WriteLine($"\t{distinctFilePath}");

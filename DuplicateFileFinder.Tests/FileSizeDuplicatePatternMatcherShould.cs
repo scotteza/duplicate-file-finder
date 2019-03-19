@@ -1,5 +1,5 @@
 ﻿using DuplicateFileFinder.DuplicatePatternMatchers;
-using DuplicateFileFinder.FileHashers;
+using DuplicateFileFinder.FileSizers;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -7,20 +7,20 @@ using System.Linq;
 
 namespace DuplicateFileFinder.Tests
 {
-    public class FileHashDuplicatePatternMatcherShould
+    public class FileSizeDuplicatePatternMatcherShould
     {
-        private Mock<FileHasher> fileHasher;
-        private FileHashDuplicatePatternMatcher matcher;
+        private Mock<FileSizer> fileSizer;
+        private FileSizeDuplicatePatternMatcher matcher;
 
         [SetUp]
         public void SetUp()
         {
-            fileHasher = new Mock<FileHasher>();
-            matcher = new FileHashDuplicatePatternMatcher(fileHasher.Object);
+            fileSizer = new Mock<FileSizer>();
+            matcher = new FileSizeDuplicatePatternMatcher(fileSizer.Object);
         }
 
         [Test]
-        public void Use_A_File_Hasher()
+        public void Use_A_File_Sizer()
         {
             var file1 = new FileData("file 1.txt", fullName: null);
             var file2 = new FileData("file 2.txt", fullName: null);
@@ -34,13 +34,13 @@ namespace DuplicateFileFinder.Tests
 
             matcher.FindDuplicates(files);
 
-            fileHasher.Verify(x => x.HashFile(file1));
-            fileHasher.Verify(x => x.HashFile(file2));
-            fileHasher.Verify(x => x.HashFile(file3));
+            fileSizer.Verify(x => x.SizeFile(file1));
+            fileSizer.Verify(x => x.SizeFile(file2));
+            fileSizer.Verify(x => x.SizeFile(file3));
         }
 
         [Test]
-        public void Match_Files_With_The_Same_Hash()
+        public void Match_Files_With_The_Same_Size()
         {
             var file1 = new FileData("file 1.txt", fullName: null);
             var file2 = new FileData("file 2.txt", fullName: null);
@@ -51,18 +51,18 @@ namespace DuplicateFileFinder.Tests
                 file2,
                 file3
             };
-            fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
-            fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
-            fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
+            fileSizer.Setup(x => x.SizeFile(file1)).Returns(42);
+            fileSizer.Setup(x => x.SizeFile(file2)).Returns(42);
+            fileSizer.Setup(x => x.SizeFile(file3)).Returns(42);
 
             var duplicates = matcher.FindDuplicates(files);
 
             Assert.That(duplicates.Count, Is.EqualTo(1));
-            Assert.That(duplicates.Contains(new DuplicateFile("ABC", 3)));
+            Assert.That(duplicates.Contains(new DuplicateFile(42, 3)));
         }
 
         [Test]
-        public void Match_Multiple_Files_With_The_Same_Hash()
+        public void Match_Multiple_Files_With_The_Same_Size()
         {
             var file1 = new FileData("file 1.txt", fullName: null);
             var file2 = new FileData("file 2.txt", fullName: null);
@@ -83,24 +83,24 @@ namespace DuplicateFileFinder.Tests
                 file7,
                 file8
             };
-            fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
-            fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
-            fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
-            fileHasher.Setup(x => x.HashFile(file4)).Returns("DEF");
-            fileHasher.Setup(x => x.HashFile(file5)).Returns("DEF");
-            fileHasher.Setup(x => x.HashFile(file6)).Returns("XXX");
-            fileHasher.Setup(x => x.HashFile(file7)).Returns("YYY");
-            fileHasher.Setup(x => x.HashFile(file8)).Returns("ZZZ");
+            fileSizer.Setup(x => x.SizeFile(file1)).Returns(42);
+            fileSizer.Setup(x => x.SizeFile(file2)).Returns(42);
+            fileSizer.Setup(x => x.SizeFile(file3)).Returns(42);
+            fileSizer.Setup(x => x.SizeFile(file4)).Returns(12);
+            fileSizer.Setup(x => x.SizeFile(file5)).Returns(12);
+            fileSizer.Setup(x => x.SizeFile(file6)).Returns(1);
+            fileSizer.Setup(x => x.SizeFile(file7)).Returns(2);
+            fileSizer.Setup(x => x.SizeFile(file8)).Returns(3);
 
             var duplicates = matcher.FindDuplicates(files);
 
             Assert.That(duplicates.Count, Is.EqualTo(2));
-            Assert.That(duplicates.Contains(new DuplicateFile("ABC", 3)));
-            Assert.That(duplicates.Contains(new DuplicateFile("DEF", 2)));
+            Assert.That(duplicates.Contains(new DuplicateFile(42, 3)));
+            Assert.That(duplicates.Contains(new DuplicateFile(12, 2)));
         }
 
         [Test]
-        public void Return_A_List_Of_Files_Per_Hash()
+        public void Return_A_List_Of_Files_Per_Size()
         {
             var file1 = new FileData("file 1.txt", "Full name 1");
             var file2 = new FileData("file 2.txt", "Full name 2");
@@ -111,9 +111,9 @@ namespace DuplicateFileFinder.Tests
                 file2,
                 file3
             };
-            fileHasher.Setup(x => x.HashFile(file1)).Returns("ABC");
-            fileHasher.Setup(x => x.HashFile(file2)).Returns("ABC");
-            fileHasher.Setup(x => x.HashFile(file3)).Returns("ABC");
+            fileSizer.Setup(x => x.SizeFile(file1)).Returns(42);
+            fileSizer.Setup(x => x.SizeFile(file2)).Returns(42);
+            fileSizer.Setup(x => x.SizeFile(file3)).Returns(42);
 
             var duplicates = matcher.FindDuplicates(files);
 
