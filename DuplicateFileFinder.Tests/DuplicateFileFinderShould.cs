@@ -37,16 +37,16 @@ namespace DuplicateFileFinder.Tests
             duplicateFileName2 = "File 2.txt";
             files = new List<FileData>
             {
-                new FileData(duplicateFileName1),
-                new FileData(duplicateFileName1),
-                new FileData(duplicateFileName1),
-                new FileData(duplicateFileName2),
-                new FileData(duplicateFileName2),
-                new FileData(duplicateFileName2),
-                new FileData(duplicateFileName2),
-                new FileData(duplicateFileName2),
-                new FileData(duplicateFileName2),
-                new FileData("File 3.txt")
+                new FileData(duplicateFileName1, fullName: null),
+                new FileData(duplicateFileName1, fullName: null),
+                new FileData(duplicateFileName1, fullName: null),
+                new FileData(duplicateFileName2, fullName: null),
+                new FileData(duplicateFileName2, fullName: null),
+                new FileData(duplicateFileName2, fullName: null),
+                new FileData(duplicateFileName2, fullName: null),
+                new FileData(duplicateFileName2, fullName: null),
+                new FileData(duplicateFileName2, fullName: null),
+                new FileData("File 3.txt", fullName: null)
             };
 
             directoryParser = new Mock<IDirectoryParser>();

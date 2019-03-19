@@ -5,7 +5,7 @@
         public string Name { get; }
         public string FullName { get; }
 
-        public FileData(string name, string fullName = null)
+        public FileData(string name, string fullName)
         {
             Name = name;
             FullName = fullName;

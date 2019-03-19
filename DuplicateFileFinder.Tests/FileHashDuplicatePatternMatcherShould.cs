@@ -22,9 +22,9 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Use_A_File_Hasher()
         {
-            var file1 = new FileData("file 1.txt");
-            var file2 = new FileData("file 2.txt");
-            var file3 = new FileData("file 3.txt");
+            var file1 = new FileData("file 1.txt", fullName: null);
+            var file2 = new FileData("file 2.txt", fullName: null);
+            var file3 = new FileData("file 3.txt", fullName: null);
             var files = new List<FileData>
             {
                 file1,
@@ -42,9 +42,9 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Match_Files_With_The_Same_Hash()
         {
-            var file1 = new FileData("file 1.txt");
-            var file2 = new FileData("file 2.txt");
-            var file3 = new FileData("file 3.txt");
+            var file1 = new FileData("file 1.txt", fullName: null);
+            var file2 = new FileData("file 2.txt", fullName: null);
+            var file3 = new FileData("file 3.txt", fullName: null);
             var files = new List<FileData>
             {
                 file1,
@@ -64,14 +64,14 @@ namespace DuplicateFileFinder.Tests
         [Test]
         public void Match_Multiple_Files_With_The_Same_Hash()
         {
-            var file1 = new FileData("file 1.txt");
-            var file2 = new FileData("file 2.txt");
-            var file3 = new FileData("file 3.txt");
-            var file4 = new FileData("file 4.txt");
-            var file5 = new FileData("file 5.txt");
-            var file6 = new FileData("file 6.txt");
-            var file7 = new FileData("file 7.txt");
-            var file8 = new FileData("file 8.txt");
+            var file1 = new FileData("file 1.txt", fullName: null);
+            var file2 = new FileData("file 2.txt", fullName: null);
+            var file3 = new FileData("file 3.txt", fullName: null);
+            var file4 = new FileData("file 4.txt", fullName: null);
+            var file5 = new FileData("file 5.txt", fullName: null);
+            var file6 = new FileData("file 6.txt", fullName: null);
+            var file7 = new FileData("file 7.txt", fullName: null);
+            var file8 = new FileData("file 8.txt", fullName: null);
             var files = new List<FileData>
             {
                 file1,
