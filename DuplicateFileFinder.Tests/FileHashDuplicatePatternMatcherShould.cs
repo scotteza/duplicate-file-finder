@@ -4,23 +4,27 @@ using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using DuplicateFileFinder.FileSizers;
 
 namespace DuplicateFileFinder.Tests
 {
     public class FileHashDuplicatePatternMatcherShould
     {
         private Mock<FileHasher> fileHasher;
+        private Mock<FileSizer> fileSizer;
+
         private FileHashDuplicatePatternMatcher matcher;
 
         [SetUp]
         public void SetUp()
         {
             fileHasher = new Mock<FileHasher>();
-            matcher = new FileHashDuplicatePatternMatcher(fileHasher.Object);
+            fileSizer = new Mock<FileSizer>();
+            matcher = new FileHashDuplicatePatternMatcher(fileHasher.Object, fileSizer.Object);
         }
 
         [Test]
-        public void Use_A_File_Hasher()
+        public void Use_A_File_Hasher_And_A_File_Hasher()
         {
             var file1 = new FileData("file 1.txt", fullName: null);
             var file2 = new FileData("file 2.txt", fullName: null);
@@ -33,6 +37,10 @@ namespace DuplicateFileFinder.Tests
             };
 
             matcher.FindDuplicates(files);
+
+            fileSizer.Verify(x => x.GetFileSize(file1));
+            fileSizer.Verify(x => x.GetFileSize(file2));
+            fileSizer.Verify(x => x.GetFileSize(file3));
 
             fileHasher.Verify(x => x.HashFile(file1));
             fileHasher.Verify(x => x.HashFile(file2));
