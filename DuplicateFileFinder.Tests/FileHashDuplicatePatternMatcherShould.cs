@@ -21,7 +21,7 @@ namespace DuplicateFileFinder.Tests
         }
 
         [Test]
-        public void Use_A_File_Hasher_And_A_File_Hasher()
+        public void Use_A_File_Hasher()
         {
             var file1 = new FileData("file 1.txt", fullName: null);
             var file2 = new FileData("file 2.txt", fullName: null);
