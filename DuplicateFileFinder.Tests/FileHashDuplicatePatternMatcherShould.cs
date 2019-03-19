@@ -38,9 +38,11 @@ namespace DuplicateFileFinder.Tests
 
             matcher.FindDuplicates(files);
 
+            /*
             fileSizer.Verify(x => x.GetFileSize(file1));
             fileSizer.Verify(x => x.GetFileSize(file2));
             fileSizer.Verify(x => x.GetFileSize(file3));
+            */
 
             fileHasher.Verify(x => x.HashFile(file1));
             fileHasher.Verify(x => x.HashFile(file2));
