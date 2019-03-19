@@ -1,6 +1,5 @@
 ﻿using DuplicateFileFinder.DuplicatePatternMatchers;
 using DuplicateFileFinder.FileHashers;
-using DuplicateFileFinder.FileSizers;
 using System;
 using System.IO;
 using System.Linq;
@@ -36,8 +35,7 @@ namespace DuplicateFileFinder.ConsoleApp
             var directoryParser = new WindowsDirectoryParser();
             var duplicateFileFinder = new DuplicateFileFinder(directoryParser);
             var windowsFileHasher = new WindowsFileHasher();
-            var windowsFileSizer = new WindowsFileSizer();
-            var patternMatcher = new FileHashDuplicatePatternMatcher(windowsFileHasher, windowsFileSizer);
+            var patternMatcher = new FileHashDuplicatePatternMatcher(windowsFileHasher);
             var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory, patternMatcher);
 
             foreach (var duplicateFile in duplicateFiles)

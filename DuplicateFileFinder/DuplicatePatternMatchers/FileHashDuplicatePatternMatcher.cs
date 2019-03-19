@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using DuplicateFileFinder.FileHashers;
+using System.Collections.Generic;
 using System.Linq;
-using DuplicateFileFinder.FileHashers;
-using DuplicateFileFinder.FileSizers;
 
 namespace DuplicateFileFinder.DuplicatePatternMatchers
 {
     public class FileHashDuplicatePatternMatcher : DuplicatePatternMatcher
     {
         private readonly FileHasher fileHasher;
-        private readonly FileSizer fileSizerObject;
 
-        public FileHashDuplicatePatternMatcher(FileHasher fileHasher, FileSizer fileSizerObject)
+        public FileHashDuplicatePatternMatcher(FileHasher fileHasher)
         {
             this.fileHasher = fileHasher;
-            this.fileSizerObject = fileSizerObject;
         }
 
         public List<DuplicateFile> FindDuplicates(List<FileData> files)
