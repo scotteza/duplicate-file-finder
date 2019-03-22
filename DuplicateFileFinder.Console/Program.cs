@@ -43,12 +43,6 @@ namespace DuplicateFileFinder.ConsoleApp
             Console.ReadKey();
         }
 
-        private static void WriteConsoleExitMessage()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit...");
-        }
-
         private static List<DuplicateFile> GetDuplicateFiles(string rootDirectory)
         {
             var directoryParser = new WindowsDirectoryParser();
@@ -76,6 +70,12 @@ namespace DuplicateFileFinder.ConsoleApp
                     Console.WriteLine($"\t{distinctFilePath}");
                 }
             }
+        }
+
+        private static void WriteConsoleExitMessage()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Press any key to exit...");
         }
 
         private static void WriteInvalidDirectoryMessage()
