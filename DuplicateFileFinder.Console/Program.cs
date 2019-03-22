@@ -1,9 +1,10 @@
 ﻿using DuplicateFileFinder.DuplicatePatternMatchers;
 using DuplicateFileFinder.FileHashers;
+using DuplicateFileFinder.FileSizers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using DuplicateFileFinder.FileSizers;
 
 namespace DuplicateFileFinder.ConsoleApp
 {
@@ -33,6 +34,23 @@ namespace DuplicateFileFinder.ConsoleApp
                 return;
             }
 
+            var duplicateFiles = GetDuplicateFiles(rootDirectory);
+
+            WriteDuplicateFilesToConsole(duplicateFiles);
+
+            WriteConsoleExitMessage();
+
+            Console.ReadKey();
+        }
+
+        private static void WriteConsoleExitMessage()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Press any key to exit...");
+        }
+
+        private static List<DuplicateFile> GetDuplicateFiles(string rootDirectory)
+        {
             var directoryParser = new WindowsDirectoryParser();
             var duplicateFileFinder = new DuplicateFileFinder(directoryParser);
 
@@ -45,7 +63,11 @@ namespace DuplicateFileFinder.ConsoleApp
             var fileNameDuplicatePatternMatcher = new FileNameDuplicatePatternMatcher();
 
             var duplicateFiles = duplicateFileFinder.GetDuplicates(rootDirectory, fileHashDuplicatePatternMatcher);
+            return duplicateFiles;
+        }
 
+        private static void WriteDuplicateFilesToConsole(List<DuplicateFile> duplicateFiles)
+        {
             foreach (var duplicateFile in duplicateFiles)
             {
                 Console.WriteLine($"Identified by: {duplicateFile.Identifier}. Total count: {duplicateFile.Count}.");
@@ -54,11 +76,6 @@ namespace DuplicateFileFinder.ConsoleApp
                     Console.WriteLine($"\t{distinctFilePath}");
                 }
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit...");
-
-            Console.ReadKey();
         }
 
         private static void WriteInvalidDirectoryMessage()
