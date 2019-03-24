@@ -3,8 +3,10 @@ using DuplicateFileFinder.FileHashers;
 using DuplicateFileFinder.FileSizers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace DuplicateFileFinder.ConsoleApp
 {
@@ -38,6 +40,9 @@ namespace DuplicateFileFinder.ConsoleApp
 
             WriteDuplicateFilesToConsole(duplicateFiles);
 
+            var path = WriteDuplicateFilesToFile(duplicateFiles);
+            Process.Start("notepad.exe", path);
+
             WriteConsoleExitMessage();
 
             Console.ReadKey();
@@ -70,6 +75,25 @@ namespace DuplicateFileFinder.ConsoleApp
                     Console.WriteLine($"\t{distinctFilePath}");
                 }
             }
+        }
+
+        private static string WriteDuplicateFilesToFile(List<DuplicateFile> duplicateFiles)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var duplicateFile in duplicateFiles)
+            {
+                sb.AppendLine($"Identified by: {duplicateFile.Identifier}. Total count: {duplicateFile.Count}.");
+                foreach (var distinctFilePath in duplicateFile.DistinctFilePaths)
+                {
+                    sb.AppendLine($"\t{distinctFilePath}");
+                }
+            }
+
+            var path = $".\\output {DateTime.Now: yyyyMMdd HHmmss}.txt";
+            File.WriteAllText(path, sb.ToString());
+
+            return path;
         }
 
         private static void WriteConsoleExitMessage()
